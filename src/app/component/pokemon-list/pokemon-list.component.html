@@ -12,7 +12,7 @@
 
 <div
   *ngFor="let pokemon of listPokemon"
-  class="bg-primary text-light p-3 mb-3 w-50 mx-auto rounded"
+  class="text-light p-3 mb-3 w-50 mx-auto rounded pk-{{ pokemon.gender }}"
 >
-  {{ pokemon }}
+  {{ pokemon.name }} - {{ pokemon.gender }}
 </div>

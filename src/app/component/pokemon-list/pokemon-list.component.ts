@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 
+type Gender = 'male' | 'female' | 'unknown';
+
+interface pokemon {
+  name: string;
+  gender: Gender;
+}
+
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
@@ -7,12 +14,21 @@ import { Component } from '@angular/core';
 })
 export class PokemonListComponent {
   newPokemonModel = '';
-
-  listPokemon: string[] = ['pikachu', 'salaméche'];
+  Gender: Gender[] = ['male', 'female', 'unknown'];
+  listPokemon: pokemon[] = [
+    {
+      name: 'pikachu',
+      gender: 'male',
+    },
+  ];
 
   addPokemon() {
-    console.log(this.newPokemonModel);
-    this.listPokemon.push(this.newPokemonModel);
+    const newGender = this.Gender[Math.round(Math.random())];
+    const newPkm: pokemon = {
+      name: this.newPokemonModel,
+      gender: newGender,
+    };
+    this.listPokemon.push(newPkm);
     this.newPokemonModel = '';
   }
 }
