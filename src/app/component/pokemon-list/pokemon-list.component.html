@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-center mb-5">
+  <input
+    class="form-control w-50 mx-4 border-dark"
+    type="text"
+    [(ngModel)]="newPokemonModel"
+    (keyup.enter)="addPokemon()"
+  />
+  <button class="btn btn-warning text-light mx-4" (click)="addPokemon()">
+    Submit
+  </button>
+</div>
+
+<div
+  *ngFor="let pokemon of listPokemon"
+  class="bg-primary text-light p-3 mb-3 w-50 mx-auto rounded"
+>
+  {{ pokemon }}
+</div>
