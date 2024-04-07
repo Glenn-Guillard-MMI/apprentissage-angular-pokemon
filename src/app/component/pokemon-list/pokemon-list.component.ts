@@ -18,15 +18,24 @@ export class PokemonListComponent {
   pekemonExistName = '';
 
   Gender: Gender[] = ['male', 'female', 'unknown'];
-  listPokemon: pokemon[] = [
-    {
-      name: 'pikachu',
-      gender: 'male',
-    },
-  ];
+  listPokemon: pokemon[] = [];
+
+  constructor() {
+    this.loadPokemonWithLocalStorage();
+    this.createPokemonLocalStorage();
+  }
+
+  createPokemonLocalStorage() {
+    localStorage.setItem('pokemon', JSON.stringify(this.listPokemon));
+  }
+
+  loadPokemonWithLocalStorage() {
+    const getLocalPokemon: any = localStorage.getItem('pokemon');
+    this.listPokemon = JSON.parse(getLocalPokemon);
+  }
 
   pokemonExist(namePokemon: string): any {
-    const pokemonSameName = this.listPokemon.some((pokemon) => {
+    const pokemonSameName = this.listPokemon?.some((pokemon) => {
       return namePokemon == pokemon.name;
     });
     return pokemonSameName;
@@ -38,16 +47,18 @@ export class PokemonListComponent {
       this.closePopUpTime();
       return;
     }
-
     const newGender = this.Gender[Math.round(Math.random())];
     const newPkm: pokemon = {
       name: this.newPokemonModel,
       gender: newGender,
     };
     this.listPokemon.push(newPkm);
+
     this.lastPokemonAdd = this.newPokemonModel;
     this.newPokemonModel = '';
     this.closePopUpTime();
+    this.createPokemonLocalStorage();
+    this.loadPokemonWithLocalStorage();
   }
 
   closePopUpTime() {
@@ -55,5 +66,10 @@ export class PokemonListComponent {
       this.lastPokemonAdd = '';
       this.pekemonExistName = '';
     }, 5000);
+  }
+
+  deletePokemonTab(pokemon: number) {
+    this.listPokemon.splice(pokemon, 1);
+    this.createPokemonLocalStorage();
   }
 }
