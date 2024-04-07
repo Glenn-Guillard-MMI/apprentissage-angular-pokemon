@@ -7,9 +7,10 @@ import { PokemonListComponent } from './component/pokemon-list/pokemon-list.comp
 import { PokemonItemComponent } from './component/pokemon-item/pokemon-item.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { PokemonPopUpComponent } from './component/pokemon-pop-up/pokemon-pop-up.component';
 
 @NgModule({
-  declarations: [AppComponent, PokemonListComponent, PokemonItemComponent],
+  declarations: [AppComponent, PokemonListComponent, PokemonItemComponent, PokemonPopUpComponent],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
