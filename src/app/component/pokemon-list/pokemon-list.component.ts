@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Gender, pokemon } from '../../models/pokemon';
 import { PokemonService } from '../../services/pokemon.service';
 
 @Component({

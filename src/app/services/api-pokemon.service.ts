@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { pokemon } from '../models/pokemon';
+import { Pokemon } from '../models/pokemon';
 import { Observable, map } from 'rxjs';
 
 interface PokemonAPI {
-  [name: string]: pokemon;
+  [name: string]: Pokemon;
 }
 
 @Injectable({
@@ -16,16 +16,16 @@ export class ApiPokemonService {
 
   constructor(private http: HttpClient) {}
 
-  PostPokemon(pokemon: pokemon) {
+  PostPokemon(pokemon: Pokemon) {
     this.http.post(this.urlApi, JSON.stringify(pokemon)).subscribe();
   }
 
-  getPokemon(): Observable<any> {
+  getPokemons(): Observable<any> {
     return this.http.get<PokemonAPI>(this.urlApi).pipe(
       map((response: PokemonAPI) => {
-        if (response) return;
+        if (!response) return;
         const keyPokemon = Object.keys(response);
-        const tab: pokemon[] = keyPokemon.map((key) => {
+        const tab: Pokemon[] = keyPokemon.map((key) => {
           return response[key];
         });
         return tab;

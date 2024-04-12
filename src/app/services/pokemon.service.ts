@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Gender, pokemon } from '../models/pokemon';
+import { Gender, Pokemon } from '../models/pokemon';
 import { ApiPokemonService } from './api-pokemon.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonService {
-  Gender: Gender[] = ['male', 'female'];
+  genders: Gender[] = ['male', 'female'];
+  listPokemon: Pokemon[] = [];
 
   constructor(private apiPokemon: ApiPokemonService) {
-    this.apiPokemon.getPokemon().subscribe((response) => {
-      this.listPokemon.push(JSON.parse(response));
+    this.apiPokemon.getPokemons().subscribe((pokemons: Pokemon[]) => {
+      this.listPokemon = pokemons;
     });
-    console.log(this.listPokemon);
   }
-  listPokemon: pokemon[] = [];
   createPokemonLocalStorage() {
     localStorage.setItem('pokemon', JSON.stringify(this.listPokemon));
   }
@@ -34,8 +33,8 @@ export class PokemonService {
     if (this.pokemonExist(newPokemon)) {
       return null;
     }
-    const newGender = this.Gender[Math.round(Math.random())];
-    const newPkm: pokemon = {
+    const newGender = this.genders[Math.round(Math.random())];
+    const newPkm: Pokemon = {
       name: newPokemon,
       gender: newGender,
     };

@@ -1,6 +1,6 @@
 export type Gender = 'male' | 'female' | 'unknown';
 
-export interface pokemon {
+export interface Pokemon {
   name: string;
   gender: Gender;
 }
