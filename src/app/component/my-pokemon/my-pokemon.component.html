@@ -1,8 +1,14 @@
-{{ name }} - {{ type }}
-<button
-  class="btn btn-primary"
-  [disabled]="noPossibilityChangeNamePokemon"
-  (click)="changeNamePokemon()"
->
-  Change
-</button>
+<div class="pokemon-item gender-{{ gender }} p-4 row align-items w-75 mx-auto">
+  <div class="col">{{ name }}</div>
+  <div class="col">{{ type }}</div>
+  <div class="col">{{ gender }}</div>
+  <div class="col">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="this.deletePokemon.emit()"
+    >
+      Supp
+    </button>
+  </div>
+</div>

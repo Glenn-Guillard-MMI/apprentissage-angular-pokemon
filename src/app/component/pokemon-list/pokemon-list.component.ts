@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Gender, pokemon } from '../../models/pokemon';
+import { PokemonService } from '../../services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -11,51 +12,27 @@ export class PokemonListComponent {
   lastPokemonAdd = '';
   pekemonExistName = '';
 
-  Gender: Gender[] = ['male', 'female'];
-  listPokemon: pokemon[] = [];
-
-  constructor() {
+  constructor(protected pokemonService: PokemonService) {
     if (localStorage.getItem('pokemon') == null) {
-      localStorage.setItem('pokemon', JSON.stringify(this.listPokemon));
+      localStorage.setItem(
+        'pokemon',
+        JSON.stringify(pokemonService.listPokemon)
+      );
     }
-    this.loadPokemonWithLocalStorage();
+    pokemonService.loadPokemonWithLocalStorage();
   }
 
-  createPokemonLocalStorage() {
-    localStorage.setItem('pokemon', JSON.stringify(this.listPokemon));
-  }
-
-  loadPokemonWithLocalStorage() {
-    const getLocalPokemon: any = localStorage.getItem('pokemon');
-    this.listPokemon = JSON.parse(getLocalPokemon);
-  }
-
-  pokemonExist(namePokemon: string): any {
-    const pokemonSameName = this.listPokemon?.some((pokemon) => {
-      return namePokemon == pokemon.name;
-    });
-    return pokemonSameName;
-  }
-
-  addPokemon() {
-    if (this.pokemonExist(this.newPokemonModel)) {
+  pokemonAdd(pokemon: string) {
+    const addPokemon = this.pokemonService.addPokemon(pokemon);
+    if (addPokemon == null) {
       this.pekemonExistName = this.newPokemonModel;
+      this.newPokemonModel = '';
       this.closePopUpTime();
-      return;
+    } else {
+      this.newPokemonModel = '';
+      this.lastPokemonAdd = addPokemon;
+      this.closePopUpTime();
     }
-    const newGender = this.Gender[Math.round(Math.random())];
-    const newPkm: pokemon = {
-      name: this.newPokemonModel,
-      gender: newGender,
-    };
-
-    this.listPokemon.push(newPkm);
-    this.lastPokemonAdd = this.newPokemonModel;
-    this.newPokemonModel = '';
-
-    this.closePopUpTime();
-    this.createPokemonLocalStorage();
-    this.loadPokemonWithLocalStorage();
   }
 
   closePopUpTime() {
@@ -63,10 +40,5 @@ export class PokemonListComponent {
       this.lastPokemonAdd = '';
       this.pekemonExistName = '';
     }, 5000);
-  }
-
-  deletePokemonTab(pokemon: number) {
-    this.listPokemon.splice(pokemon, 1);
-    this.createPokemonLocalStorage();
   }
 }

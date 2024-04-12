@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-my-pokemon',
@@ -6,15 +6,16 @@ import { Component } from '@angular/core';
   styleUrl: './my-pokemon.component.scss',
 })
 export class MyPokemonComponent {
-  listeNames = ['bulbizzare', 'salameche', 'carapuce'];
+  @Input() name?: string;
+  @Input() gender?: string;
+  @Output() deletePokemon = new EventEmitter();
+
   listeTypes = ['plante', 'feu', 'eau'];
   noPossibilityChangeNamePokemon = false;
 
-  name = this.randomList(this.listeNames);
   type = this.randomList(this.listeTypes);
 
   changeNamePokemon() {
-    this.name = this.randomList(this.listeNames);
     this.noPossibilityChangeNamePokemon = true;
   }
 

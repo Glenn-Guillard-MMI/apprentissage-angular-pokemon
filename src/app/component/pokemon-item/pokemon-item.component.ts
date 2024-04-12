@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { pokemon } from '../../models/pokemon';
+import { Gender, pokemon } from '../../models/pokemon';
 
 @Component({
   selector: 'app-pokemon-item',
@@ -7,6 +7,7 @@ import { pokemon } from '../../models/pokemon';
   styleUrl: './pokemon-item.component.scss',
 })
 export class PokemonItemComponent {
-  @Input() pokemon?: pokemon;
+  @Input() name?: string;
+  @Input() gender?: Gender;
   @Output() deletePokemon = new EventEmitter();
 }

@@ -3,27 +3,22 @@
     class="form-control w-50 mx-4 border-dark"
     type="text"
     [(ngModel)]="newPokemonModel"
-    (keyup.enter)="addPokemon()"
+    (keyup.enter)="this.pokemonAdd(newPokemonModel)"
   />
-  <button class="btn btn-warning text-light mx-4" (click)="addPokemon()">
+  <button
+    class="btn btn-warning text-light mx-4"
+    (click)="this.pokemonService.addPokemon(newPokemonModel)"
+  >
     Submit
   </button>
 </div>
 
-<!-- <app-pokemon-item
-  *ngFor="let pokemon of listPokemon; let index = index"
-  [pokemon]="pokemon"
-  (deletePokemon)="deletePokemonTab(index)"
-></app-pokemon-item> -->
-
-<app-my-pokemon></app-my-pokemon>
-<app-my-pokemon></app-my-pokemon>
-<app-my-pokemon></app-my-pokemon>
-<app-my-pokemon></app-my-pokemon>
-<app-my-pokemon></app-my-pokemon>
-<app-my-pokemon></app-my-pokemon>
-<app-my-pokemon></app-my-pokemon>
-<app-my-pokemon></app-my-pokemon>
+<app-my-pokemon
+  *ngFor="let pokemon of this.pokemonService.listPokemon; let index = index"
+  [name]="pokemon.name"
+  [gender]="pokemon.gender"
+  (deletePokemon)="this.pokemonService.deletePokemonTab(index)"
+></app-my-pokemon>
 
 <app-pokemon-pop-up
   [pokemon]="lastPokemonAdd"

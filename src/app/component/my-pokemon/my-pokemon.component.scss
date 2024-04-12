@@ -2,3 +2,14 @@
   display: block;
   margin-bottom: 15px;
 }
+
+.pokemon-item {
+  &.gender-male {
+    background-color: blue;
+    color: white;
+  }
+
+  &.gender-female {
+    background-color: pink;
+  }
+}
