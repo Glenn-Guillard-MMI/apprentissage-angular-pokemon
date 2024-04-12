@@ -8,9 +8,10 @@ import { PokemonItemComponent } from './component/pokemon-item/pokemon-item.comp
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { PokemonPopUpComponent } from './component/pokemon-pop-up/pokemon-pop-up.component';
+import { MyPokemonComponent } from './component/my-pokemon/my-pokemon.component';
 
 @NgModule({
-  declarations: [AppComponent, PokemonListComponent, PokemonItemComponent, PokemonPopUpComponent],
+  declarations: [AppComponent, PokemonListComponent, PokemonItemComponent, PokemonPopUpComponent, MyPokemonComponent],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],

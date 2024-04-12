@@ -40,8 +40,8 @@ import { Component, Input } from '@angular/core';
   `,
 })
 export class PokemonPopUpComponent {
-  @Input() pokemon: string = '';
-  @Input() pokemonExist: string = '';
+  @Input() pokemon?: string;
+  @Input() pokemonExist?: string;
 
   closePopUp() {
     this.pokemon = '';

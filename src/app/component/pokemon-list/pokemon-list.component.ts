@@ -1,11 +1,5 @@
 import { Component } from '@angular/core';
-
-type Gender = 'male' | 'female' | 'unknown';
-
-interface pokemon {
-  name: string;
-  gender: Gender;
-}
+import { Gender, pokemon } from '../../models/pokemon';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -17,12 +11,14 @@ export class PokemonListComponent {
   lastPokemonAdd = '';
   pekemonExistName = '';
 
-  Gender: Gender[] = ['male', 'female', 'unknown'];
+  Gender: Gender[] = ['male', 'female'];
   listPokemon: pokemon[] = [];
 
   constructor() {
+    if (localStorage.getItem('pokemon') == null) {
+      localStorage.setItem('pokemon', JSON.stringify(this.listPokemon));
+    }
     this.loadPokemonWithLocalStorage();
-    this.createPokemonLocalStorage();
   }
 
   createPokemonLocalStorage() {
@@ -52,10 +48,11 @@ export class PokemonListComponent {
       name: this.newPokemonModel,
       gender: newGender,
     };
-    this.listPokemon.push(newPkm);
 
+    this.listPokemon.push(newPkm);
     this.lastPokemonAdd = this.newPokemonModel;
     this.newPokemonModel = '';
+
     this.closePopUpTime();
     this.createPokemonLocalStorage();
     this.loadPokemonWithLocalStorage();

@@ -10,17 +10,21 @@
   </button>
 </div>
 
-<div
-  *ngFor="let pokemon of listPokemon; index as i"
-  class="text-light p-3 mb-3 w-50 mx-auto rounded pk-{{
-    pokemon.gender
-  }} d-flex justify-content-between align-items-center"
->
-  {{ pokemon.name }} - {{ pokemon.gender }}
-  <button type="button" class="btn btn-danger" (click)="deletePokemonTab(i)">
-    Supp
-  </button>
-</div>
+<!-- <app-pokemon-item
+  *ngFor="let pokemon of listPokemon; let index = index"
+  [pokemon]="pokemon"
+  (deletePokemon)="deletePokemonTab(index)"
+></app-pokemon-item> -->
+
+<app-my-pokemon></app-my-pokemon>
+<app-my-pokemon></app-my-pokemon>
+<app-my-pokemon></app-my-pokemon>
+<app-my-pokemon></app-my-pokemon>
+<app-my-pokemon></app-my-pokemon>
+<app-my-pokemon></app-my-pokemon>
+<app-my-pokemon></app-my-pokemon>
+<app-my-pokemon></app-my-pokemon>
+
 <app-pokemon-pop-up
   [pokemon]="lastPokemonAdd"
   [pokemonExist]="pekemonExistName"
