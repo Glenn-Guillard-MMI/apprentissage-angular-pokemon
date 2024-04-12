@@ -25,9 +25,7 @@ export class ApiPokemonService {
       map((response: PokemonAPI) => {
         if (!response) return;
         const keyPokemon = Object.keys(response);
-        const tab: Pokemon[] = keyPokemon.map((key) => {
-          return response[key];
-        });
+        const tab: Pokemon[] = keyPokemon.map((key) => response[key]);
         return tab;
       })
     );

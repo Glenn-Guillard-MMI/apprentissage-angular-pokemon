@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
+import { Pokemon } from '../../models/pokemon';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -32,6 +33,13 @@ export class PokemonListComponent {
       this.lastPokemonAdd = addPokemon;
       this.closePopUpTime();
     }
+  }
+
+  onPokemonAddBtnClick() {
+    this.pokemonAdd(this.newPokemonModel);
+    this.pokemonService.getPokemons().subscribe((pokemons: Pokemon[]) => {
+      console.log("J'ai récupéré les pokémons !!");
+    });
   }
 
   closePopUpTime() {

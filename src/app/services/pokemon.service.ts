@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Gender, Pokemon } from '../models/pokemon';
 import { ApiPokemonService } from './api-pokemon.service';
+import { delay, shareReplay, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +11,18 @@ export class PokemonService {
   listPokemon: Pokemon[] = [];
 
   constructor(private apiPokemon: ApiPokemonService) {
-    this.apiPokemon.getPokemons().subscribe((pokemons: Pokemon[]) => {
-      this.listPokemon = pokemons;
-    });
+    this.getPokemons().subscribe();
   }
+
+  getPokemons() {
+    return this.apiPokemon.getPokemons()
+    .pipe(
+      tap((pokemons: Pokemon[]) => {
+        this.listPokemon = pokemons;
+      }),
+    );
+  }
+
   createPokemonLocalStorage() {
     localStorage.setItem('pokemon', JSON.stringify(this.listPokemon));
   }
