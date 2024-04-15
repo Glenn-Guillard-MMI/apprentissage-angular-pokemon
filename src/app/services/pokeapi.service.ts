@@ -10,7 +10,7 @@ import { PokemonDetail } from '../models/api';
 export class PokeapiService {
   constructor(private http: HttpClient) {}
   private api = 'https://pokeapi.co/api/v2/pokemon';
-  getPokemon() {
+  getPokemons() {
     return this.http
       .get<pokemonAPI>(this.api)
       .pipe(map((rslt) => rslt.results));
