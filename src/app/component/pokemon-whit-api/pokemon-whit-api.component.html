@@ -1,0 +1,13 @@
+<div
+  class="row p-4 border border-dark align-self-center"
+  *ngFor="let pokemon of pokemons"
+>
+  <img [src]="pokemon.sprites.front_default" class="w-25" />
+
+  <h1 class="col">{{ pokemon.name }}</h1>
+  <div class="col" *ngFor="let item of pokemon.types">
+    <span class="badge pokemon-badge-{{ item.type.name }}">{{
+      item.type.name
+    }}</span>
+  </div>
+</div>
