@@ -11,6 +11,7 @@ import { PokemonPopUpComponent } from './component/pokemon-pop-up/pokemon-pop-up
 import { MyPokemonComponent } from './component/my-pokemon/my-pokemon.component';
 import { ViewPokemonComponent } from './component/view-pokemon/view-pokemon.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PokemonWhitAPIComponent } from './component/pokemon-whit-api/pokemon-whit-api.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     PokemonPopUpComponent,
     MyPokemonComponent,
     ViewPokemonComponent,
+    PokemonWhitAPIComponent,
   ],
   imports: [
     BrowserModule,

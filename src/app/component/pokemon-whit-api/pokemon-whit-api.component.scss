@@ -1,0 +1,20 @@
+.badge {
+  &.pokemon-badge-grass {
+    background-color: #3da224;
+  }
+  &.pokemon-badge-fire {
+    background-color: #e72324;
+  }
+  &.pokemon-badge-water {
+    background-color: #2481ef;
+  }
+  &.pokemon-badge-bug {
+    background-color: #92a212;
+  }
+  &.pokemon-badge-normal {
+    background-color: #a0a2a0;
+  }
+  &.pokemon-badge-flying {
+    background-color: #82baef;
+  }
+}

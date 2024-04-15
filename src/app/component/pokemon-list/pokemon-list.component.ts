@@ -1,6 +1,6 @@
+import { PokemonType } from './../../models/pokemon';
 import { Component } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
-import { Pokemon } from '../../models/pokemon';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -11,7 +11,9 @@ export class PokemonListComponent {
   newPokemonModel = '';
   lastPokemonAdd = '';
   pekemonExistName = '';
+  newPokemonType = '';
 
+  pokemonTypes = PokemonType;
   constructor(protected pokemonService: PokemonService) {
     if (localStorage.getItem('pokemon') == null) {
       localStorage.setItem(
@@ -23,7 +25,9 @@ export class PokemonListComponent {
   }
 
   pokemonAdd(pokemon: string) {
-    const addPokemon = this.pokemonService.addPokemon(pokemon);
+    const addPokemon = this.pokemonService.addPokemon(pokemon, [
+      this.newPokemonType,
+    ]);
     if (addPokemon == null) {
       this.pekemonExistName = this.newPokemonModel;
       this.newPokemonModel = '';
@@ -37,9 +41,7 @@ export class PokemonListComponent {
 
   onPokemonAddBtnClick() {
     this.pokemonAdd(this.newPokemonModel);
-    this.pokemonService.getPokemons().subscribe((pokemons: Pokemon[]) => {
-      console.log("J'ai récupéré les pokémons !!");
-    });
+    this.pokemonService.getPokemons().subscribe();
   }
 
   closePopUpTime() {

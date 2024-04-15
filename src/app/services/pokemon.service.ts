@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Gender, Pokemon } from '../models/pokemon';
-import { ApiPokemonService } from './api-pokemon.service';
+import {
+  Gender,
+  LocalPokemon,
+  Pokemon,
+  PokemonType,
+  Type,
+} from '../models/pokemon';
+import { ApiPokemonService, PokemonAPI } from './api-pokemon.service';
 import { delay, shareReplay, tap } from 'rxjs';
 
 @Injectable({
@@ -9,23 +15,27 @@ import { delay, shareReplay, tap } from 'rxjs';
 export class PokemonService {
   genders: Gender[] = ['male', 'female'];
   listPokemon: Pokemon[] = [];
-
+  static loadPokemon = true;
   constructor(private apiPokemon: ApiPokemonService) {
     this.getPokemons().subscribe();
   }
 
+  get staticLoadPokemon() {
+    return PokemonService.loadPokemon;
+  }
+
   getPokemons() {
-    return this.apiPokemon.getPokemons()
-    .pipe(
-      tap((pokemons: Pokemon[]) => {
-        this.listPokemon = pokemons;
-      }),
+    return this.apiPokemon.getPokemons().pipe(
+      tap((pokemons: [Pokemon[], boolean]) => {
+        this.listPokemon = pokemons[0];
+        PokemonService.loadPokemon = pokemons[1];
+      })
     );
   }
 
-  createPokemonLocalStorage() {
-    localStorage.setItem('pokemon', JSON.stringify(this.listPokemon));
-  }
+  // createPokemonLocalStorage() {
+  //   localStorage.setItem('pokemon', JSON.stringify(this.listPokemon));
+  // }
 
   loadPokemonWithLocalStorage() {
     const getLocalPokemon: any = localStorage.getItem('pokemon');
@@ -38,24 +48,39 @@ export class PokemonService {
     });
     return pokemonSameName;
   }
-  addPokemon(newPokemon: string) {
+  addPokemon(newPokemon: string, pokemonTypeName: string[]) {
+    const newTypes = pokemonTypeName.map((pokemonTypeName: string) => {
+      console.log(pokemonTypeName);
+      const type = PokemonType.find((type) => {
+        return type.name == pokemonTypeName;
+      });
+      return type;
+    }) as Type[];
     if (this.pokemonExist(newPokemon)) {
       return null;
     }
     const newGender = this.genders[Math.round(Math.random())];
-    const newPkm: Pokemon = {
+
+    const newPkm: LocalPokemon = {
       name: newPokemon,
       gender: newGender,
+      types: newTypes,
     };
 
-    this.createPokemonLocalStorage();
+    // this.createPokemonLocalStorage();
     this.loadPokemonWithLocalStorage();
-    this.apiPokemon.PostPokemon(newPkm);
+    this.apiPokemon.PostPokemon(newPkm).subscribe((rsl: any) => {
+      const newPokemonId: Pokemon = { ...newPkm, id: rsl.name };
+      const listeActuel = this.listPokemon;
+      console.log(listeActuel);
+      console.log(newPokemonId);
+      this.listPokemon = [newPokemonId, ...listeActuel];
+    });
     return newPokemon;
   }
 
   deletePokemonTab(pokemon: number) {
+    this.apiPokemon.deletePokemon(this.listPokemon[pokemon].id).subscribe();
     this.listPokemon.splice(pokemon, 1);
-    this.createPokemonLocalStorage();
   }
 }

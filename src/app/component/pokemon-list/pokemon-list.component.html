@@ -4,7 +4,16 @@
     type="text"
     [(ngModel)]="newPokemonModel"
     (keyup.enter)="this.pokemonAdd(newPokemonModel)"
-  />
+  /><select class="form-select w-25" [(ngModel)]="newPokemonType">
+    <option
+      class="badge"
+      ngValue="{{ item.name }}"
+      *ngFor="let item of pokemonTypes"
+      style="background-color: {{ item.color }}"
+    >
+      {{ item.name }}
+    </option>
+  </select>
   <button
     class="btn btn-warning text-light mx-4"
     (click)="this.onPokemonAddBtnClick()"
@@ -12,11 +21,27 @@
     Submit
   </button>
 </div>
-
+<div
+  *ngIf="pokemonService.staticLoadPokemon"
+  class="d-flex justify-content-center"
+>
+  <div class="spinner-border text-dark" role="status">
+    <span class="sr-only"></span>
+  </div>
+</div>
+<div
+  *ngIf="
+    !pokemonService.staticLoadPokemon && pokemonService.listPokemon.length == 0
+  "
+  class="d-flex justify-content-center"
+>
+  Aucun pokémon trouvé
+</div>
 <app-my-pokemon
   *ngFor="let pokemon of this.pokemonService.listPokemon; let index = index"
   [name]="pokemon.name"
   [gender]="pokemon.gender"
+  [type]="pokemon.types"
   (deletePokemon)="this.pokemonService.deletePokemonTab(index)"
 ></app-my-pokemon>
 
