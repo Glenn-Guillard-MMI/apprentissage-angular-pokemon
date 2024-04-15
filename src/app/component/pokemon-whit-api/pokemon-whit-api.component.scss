@@ -1,4 +1,9 @@
 .badge {
+  margin-left: 6px;
+  &:first-child {
+    margin-left: 0;
+  }
+
   &.pokemon-badge-grass {
     background-color: #3da224;
   }
@@ -16,5 +21,8 @@
   }
   &.pokemon-badge-flying {
     background-color: #82baef;
+  }
+  &.pokemon-badge-poison {
+    background-color: #a12e9b;
   }
 }
